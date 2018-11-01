@@ -5,10 +5,12 @@
 public class Recursive {
 
     private static String addStr(String str1, String str2) {
-        if (str1 == null)
+        if (str1 == null) {
             return str2;
-        if (str2 == null)
+        }
+        if (str2 == null) {
             return str1;
+        }
         StringBuffer s1 = new StringBuffer(str1).reverse();
         StringBuffer s2 = new StringBuffer(str2).reverse();
         StringBuilder res = new StringBuilder();
@@ -18,13 +20,15 @@ public class Recursive {
         if (len1 < len2) {
             len = len2;
             int count = len2 - len1;
-            while (count-- > 0)
+            while (count-- > 0) {
                 s1.append('0');
+            }
         } else {
             len = len1;
             int count = len1 - len2;
-            while (count-- > 0)
+            while (count-- > 0) {
                 s2.append('0');
+            }
         }
         int overflow = 0;
         int num;
