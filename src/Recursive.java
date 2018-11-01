@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @Description: 递归计算大数平方和
  * @Author Created by liangjunwei on 2018/8/10 16:35
