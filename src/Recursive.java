@@ -1,3 +1,5 @@
+import java.util.Date;
+
 /**
  * @Description: 递归计算大数平方和
  * @Author Created by liangjunwei on 2018/8/10 16:35
@@ -47,19 +49,20 @@ public class Recursive {
         return res.reverse().toString();
     }
 
-    private static String multiply(String sn) {
-        int length = sn.length();
+    private static String multiply(String num1, String num2) {
+        int l = num1.length();
+        int r = num2.length();
         //用来存储结果的数组，可以肯定的是两数相乘的结果的长度，肯定不会大于两个数各自长度的和。
-        int[] num = new int[length + length];
+        int[] num = new int[l + r];
         //第一个数按位循环
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < l; i++) {
             //得到最低位的数字
-            int n1 = sn.charAt(length - 1 - i) - '0';
+            int n1 = num1.charAt(l - 1 - i) - '0';
             //保存进位
             int tmp = 0;
             //第二个数按位循环
-            for (int j = 0; j < length; j++) {
-                int n2 = sn.charAt(length - 1 - j) - '0';
+            for (int j = 0; j < r; j++) {
+                int n2 = num2.charAt(r - 1 - j) - '0';
                 //拿出此时的结果数组里存的数+现在计算的结果数+上一个进位数
                 tmp = tmp + num[i + j] + n1 * n2;
                 //得到此时结果位的值
@@ -68,10 +71,10 @@ public class Recursive {
                 tmp /= 10;
             }
             //第一轮结束后，如果有进位，将其放入到更高位
-            num[i + length] = tmp;
+            num[i + r] = tmp;
         }
 
-        int i = length * 2 - 1;
+        int i = l + r - 1;
         //计算最终结果值到底是几位数，
         while (i > 0 && num[i] == 0) {
             i--;
@@ -85,6 +88,7 @@ public class Recursive {
         }
         return result.toString();
     }
+
     private static String subStr(String f, String s) {
         // 将字符串翻转并转换成字符数组
         char[] a = new StringBuffer(f).reverse().toString().toCharArray();
@@ -142,20 +146,49 @@ public class Recursive {
             sb.append(result[i]);
         }
         // 如果最终结果集合中没有值，就说明是两值相等，最终返回0
-        if (sb.toString().equals("")) {
+        if ("".equals(sb.toString())) {
             sb.append("0");
         }
         return sb.toString();
     }
 
-    public static void main(String[] args) {
-        System.out.println(recursive("1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"));
-    }
+
     private static String recursive(String n) {
-        if ("1".equals(n)) {
+        /*if ("1".equals(n)) {
             return "1";
         } else {
-            return addStr(multiply(n + ""), multiply(subStr(n , "1")));
+            return addStr(multiply(n + ""), recursive(subStr(n, "1")));
+        }*/
+        String s = "0";
+        for (long i = 1; i <= Long.valueOf(n); i++) {
+            s = addStr(multiply(i + "", i + ""), s);
         }
+        return s;
+    }
+
+    private static String jieCheng(String n) {
+        String s = "1";
+        for (int i = 1; i <= Long.valueOf(n); i++) {
+            s = multiply(s, i + "");
+        }
+        return s;
+    }
+
+    private static String pingFang(String n, int m) {
+        String s = n;
+        for (int i = 1; i <= m; i++) {
+            s = multiply(s, n);
+        }
+        return s;
+    }
+
+    public static void main(String[] args) {
+        //System.out.println(recursive("100000000"));//333333338333333350000000
+        //System.out.println(subStr("10459", "1"));
+        System.out.println(new Date());
+        String s = pingFang("999", 20000);
+        System.out.println(s);
+        System.out.println(new Date());
+        System.out.println(s.length());
     }
 }
